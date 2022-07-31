@@ -1,9 +1,12 @@
 import react, { useEffect, useState } from "react";
+import LineTo from "react-lineto";
+import { FiX, FiCircle } from "react-icons/fi";
 
 function App() {
     const [xMove, setXMove] = useState(true);
     const [x, setX] = useState([]);
     const [o, setO] = useState([]);
+    const [winningLine, setWinningLine] = useState();
 
     const winningCombinations = [
         [1, 2, 3],
@@ -18,13 +21,21 @@ function App() {
 
     useEffect(() => {
         winningCombinations.forEach((winningCombination) => {
-            if (winningCombination.every((v) => x.includes(v))) console.log("X won");
+            if (winningCombination.every((v) => x.includes(v))) {
+                setWinningLine(winningCombination);
+                console.log("X won");
+                console.log(winningCombination);
+            }
         });
     }, [x]);
 
     useEffect(() => {
         winningCombinations.forEach((winningCombination) => {
-            if (winningCombination.every((v) => o.includes(v))) console.log("O won");
+            if (winningCombination.every((v) => o.includes(v))) {
+                setWinningLine(winningCombination);
+                console.log("O won");
+                console.log(winningCombination);
+            }
         });
     }, [o]);
 
@@ -51,11 +62,20 @@ function App() {
                 <p>{xMove ? "X move" : "O move"}</p>
                 <div className=" w-[400px] h-[400px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 grid grid-cols-3 grid-rows-3 justify-items-center items-center">
                     {[...Array(9).keys()].map((cell) => (
-                        <div className="w-[90%] h-[90%] bg-blue-500 hover:bg-blue-300 cursor-pointer" key={cell} onClick={() => handleCellClicked(cell + 1)}>
-                            {x.includes(cell + 1) ? "X" : o.includes(cell + 1) ? "O" : null}
+                        <div
+                            className={`w-[90%] h-[90%] bg-blue-500 hover:bg-blue-300 cursor-pointer flex justify-center items-center ${cell}`}
+                            key={cell}
+                            onClick={() => handleCellClicked(cell + 1)}
+                        >
+                            {x.includes(cell + 1) ? (
+                                <FiX className=" text-[3rem]" />
+                            ) : o.includes(cell + 1) ? (
+                                <div className="w-[32px] h-[32px] rounded-[50%] border-4 border-black"></div>
+                            ) : null}
                         </div>
                     ))}
                 </div>
+                {winningLine ? <LineTo from={winningLine[0] - 1} to={winningLine[2] - 1} borderWidth={4} borderStyle="" delay="100" /> : null}
             </div>
         </div>
     );
