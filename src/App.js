@@ -62,7 +62,7 @@ function App() {
       </h2>
       <div className=" w-[60%] p-10 bg-white rounded-2xl relative flex flex-col justify-center gap-14 items-center ">
         <div className="w-full max-w-md h-full flex flex-col justify-center gap-14 items-center ">
-          <div className="grid grid-cols-7 justify-center items-center w-full text-center">
+          <div className="grid grid-cols-7 justify-center items-center w-full text-center mr-14">
             <FaLongArrowAltRight
               className={`mx-auto text-red-600 text-[2rem] font-bold ${
                 xMove ? "" : "invisible"
@@ -70,14 +70,21 @@ function App() {
             />
 
             {[...Array(6).keys()].map((figure) => (
-              <DragDropContainer targetKey="foo" key={figure}>
-                <FiX
-                  onDragStart={console.log()}
-                  key={"X" + figure}
-                  //   className={`text-[${(figure + 1) * 10}px]`}
-                  style={{ fontSize: `${(figure + 3) * 8}px` }}
-                />
-              </DragDropContainer>
+              <div className="flex justify-center w-full">
+                <DragDropContainer
+                  targetKey="foo"
+                  key={figure}
+                  onDragStart={() => console.log("start")}
+                >
+                  <FiX
+                    onDragStart={console.log()}
+                    key={"X" + figure}
+                    //   className={`text-[${(figure + 1) * 10}px]`}
+                    style={{ fontSize: `${(figure + 3) * 8}px` }}
+                    //   className="mx-auto"
+                  />
+                </DragDropContainer>
+              </div>
             ))}
           </div>
 
@@ -92,7 +99,10 @@ function App() {
                   winningLine ? null : handleCellClicked(cell + 1)
                 }
               >
-                <DropTarget targetKey="foo">
+                <DropTarget
+                  targetKey="foo"
+                  onDrop={() => console.log("sdfsdf")}
+                >
                   {x.includes(cell + 1) ? (
                     <FiX className=" text-[3rem]" />
                   ) : o.includes(cell + 1) ? (
@@ -103,7 +113,7 @@ function App() {
             ))}
           </div>
 
-          <div className="grid grid-cols-7 justify-around items-center w-full">
+          <div className="grid grid-cols-7 justify-around items-center w-full mr-14">
             <FaLongArrowAltRight
               className={`mx-auto text-red-600 text-[2rem] font-bold  ${
                 xMove ? "invisible" : ""
@@ -122,7 +132,7 @@ function App() {
                   width: `${(figure + 3) * 6}px`,
                   height: `${(figure + 3) * 6}px`,
                 }}
-                className="rounded-[50%] border-4 border-black"
+                className="rounded-[50%] border-4 border-black mx-auto"
               ></div>
             ))}
           </div>
