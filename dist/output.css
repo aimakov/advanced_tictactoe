@@ -598,6 +598,10 @@ video {
   height: 100%;
 }
 
+.h-\[64px\] {
+  height: 64px;
+}
+
 .h-\[400px\] {
   height: 400px;
 }
@@ -608,14 +612,6 @@ video {
 
 .h-\[32px\] {
   height: 32px;
-}
-
-.h-\[25px\] {
-  height: 25px;
-}
-
-.h-\[64px\] {
-  height: 64px;
 }
 
 .w-\[120px\] {
@@ -696,12 +692,12 @@ video {
   gap: 3.5rem;
 }
 
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
 .rounded-\[50\%\] {
   border-radius: 50%;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
 }
 
 .border-4 {

@@ -3,6 +3,8 @@ import LineTo from "react-lineto";
 import { FiX } from "react-icons/fi";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
+import DropZone from "./DropZone";
+import Cross from "./Cross";
 
 function App() {
     const [xMove, setXMove] = useState(true);
@@ -22,6 +24,7 @@ function App() {
     ];
 
     useEffect(() => {
+        console.log("updated x: ", x);
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => x.includes(v))) {
                 setWinningLine(winningCombination);
@@ -53,72 +56,6 @@ function App() {
                 setXMove(true);
             }
         }
-    };
-
-    const DropZone = (props) => {
-        const [item, setItem] = useState();
-
-        const handleDrop = (e) => {
-            const data = {
-                type: e?.dragData?.type,
-                size: e?.dragData?.size,
-            };
-
-            console.log(data);
-            console.log(props.index);
-            setItem(data);
-        };
-
-        return (
-            <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
-                <div className="w-[120px] h-[120px] flex justify-center items-center">
-                    {item?.type === "x" && (
-                        <div>
-                            {
-                                <FiX
-                                    key={"X" + item.size}
-                                    //   className={`text-[${(figure + 1) * 10}px]`}
-                                    style={{ fontSize: `${(item.size + 3) * 8}px` }}
-                                    //   className="mx-auto"
-                                />
-                            }
-                        </div>
-                    )}
-                    {item?.type === "o" && (
-                        <div
-                            key={"O" + item.size}
-                            style={{
-                                width: `${(item.size + 3) * 6}px`,
-                                height: `${(item.size + 3) * 6}px`,
-                            }}
-                            className="rounded-[50%] border-4 border-black mx-auto"
-                        ></div>
-                    )}
-                </div>
-            </DropTarget>
-        );
-    };
-
-    const Cross = (props) => {
-        const [isDropped, setIsDropped] = useState(false);
-
-        if (isDropped) return;
-
-        return (
-            <DragDropContainer
-                targetKey="foo"
-                onDragStart={() => console.log("start")}
-                onDrop={() => setIsDropped(true)}
-                dragData={{ type: "x", size: props.size }}
-            >
-                <FiX
-                    key={"X" + props.size}
-                    //   className={`text-[${(figure + 1) * 10}px]`}
-                    style={{ fontSize: `${(props.size + 3) * 8}px` }}
-                    //   className="mx-auto"
-                />
-            </DragDropContainer>
-        );
     };
 
     const Circle = (props) => {
@@ -157,22 +94,7 @@ function App() {
 
                         {[...Array(6).keys()].map((figure) => (
                             <div className="flex justify-center w-full h-[64px] items-center">
-                                <Cross size={figure} />
-                                {/* <DragDropContainer
-                                    targetKey="foo"
-                                    key={figure}
-                                    onDragStart={() => console.log("start")}
-                                    onDrop={() => console.log("dropped")}
-                                    dragData={{ type: "x", size: figure }}
-                                >
-                                    <FiX
-                                        onDragStart={console.log()}
-                                        key={"X" + figure}
-                                        //   className={`text-[${(figure + 1) * 10}px]`}
-                                        style={{ fontSize: `${(figure + 3) * 8}px` }}
-                                        //   className="mx-auto"
-                                    />
-                                </DragDropContainer> */}
+                                <Cross size={figure} x={x} index={figure} />
                             </div>
                         ))}
                     </div>
@@ -186,20 +108,7 @@ function App() {
                                 key={cell}
                                 // onClick={() => (winningLine ? null : handleCellClicked(cell + 1))}
                             >
-                                <DropZone index={cell} />
-                                {/* <DropTarget
-                  targetKey="foo"
-                  onHit={(e) => console.log(e.dragData.size)}
-                >
-                  <div className="w-[120px] h-[120px] flex justify-center items-center">
-                    {}
-                    {x.includes(cell + 1) ? (
-                      <FiX className=" text-[3rem]" />
-                    ) : o.includes(cell + 1) ? (
-                      <div className="w-[32px] h-[32px] rounded-[50%] border-4 border-black"></div>
-                    ) : null}
-                  </div>
-                </DropTarget> */}
+                                <DropZone index={cell} x={x} setX={setX} />
                             </div>
                         ))}
                     </div>
@@ -208,20 +117,7 @@ function App() {
                         <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${xMove ? "invisible" : ""}`} />
 
                         {[...Array(6).keys()].map((figure) => (
-                            // <FiX
-                            //   key={"X" + figure}
-                            //   //   className={`text-[${(figure + 1) * 10}px]`}
-                            //   style={{ fontSize: `${(figure + 3) * 8}px` }}
-                            // />
                             <Circle size={figure} />
-                            // <div
-                            //     key={"O" + figure}
-                            //     style={{
-                            //         width: `${(figure + 3) * 6}px`,
-                            //         height: `${(figure + 3) * 6}px`,
-                            //     }}
-                            //     className="rounded-[50%] border-4 border-black mx-auto"
-                            // ></div>
                         ))}
                     </div>
                 </div>
