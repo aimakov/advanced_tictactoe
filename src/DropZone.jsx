@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DropTarget } from "react-drag-drop-container";
 import { FiX } from "react-icons/fi";
+import { arrayRemove } from "./functions/arrayRemove";
 
 const DropZone = (props) => {
     const [item, setItem] = useState();
@@ -11,19 +12,40 @@ const DropZone = (props) => {
             size: e?.dragData?.size,
         };
 
-        console.log(data);
-        console.log(props.index);
-
         if (!item) {
             setItem(data);
+            if (e.dragData.type === "x") {
+                let temp = [...props.x, props.index];
+                props.setX(temp);
+                props.setUsedX([...props.usedX, e.dragData.index]);
+                props.setXMove(false);
+            } else if (e.dragData.type === "o") {
+                let temp = [...props.o, props.index];
+                props.setO(temp);
+                props.setUsedO([...props.usedO, e.dragData.index]);
+                props.setXMove(true);
+            }
             return;
         }
 
+        console.log("From Dropzone: ", item.size, e.dragData.size);
+
         if (item.size < e.dragData.size) {
-            console.log("sfsd");
-            let temp = [...props.x, props.index];
-            console.log("from dropzone temp" + temp);
-            props.setX(temp);
+            if (item.type !== e.dragData.type) {
+                if (e.dragData.type === "x") {
+                    let temp = [...props.x, props.index];
+                    props.setX(temp);
+                    props.setUsedX([...props.usedX, e.dragData.index]);
+                    props.setO(arrayRemove([...props.o], props.index));
+                    props.setXMove(false);
+                } else if (e.dragData.type === "o") {
+                    let temp = [...props.o, props.index];
+                    props.setO(temp);
+                    props.setUsedO([...props.usedO, e.dragData.index]);
+                    props.setX(arrayRemove([...props.x], props.index));
+                    props.setXMove(true);
+                }
+            }
             setItem(data);
         }
 

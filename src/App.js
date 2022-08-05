@@ -5,23 +5,30 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import DropZone from "./DropZone";
 import Cross from "./Cross";
+import Circle from "./Circle";
 
 function App() {
     const [xMove, setXMove] = useState(true);
     const [x, setX] = useState([]);
     const [o, setO] = useState([]);
+    const [usedX, setUsedX] = useState([]);
+    const [usedO, setUsedO] = useState([]);
     const [winningLine, setWinningLine] = useState();
 
     const winningCombinations = [
-        [1, 2, 3],
-        [1, 5, 9],
+        [0, 1, 2],
+        [0, 4, 8],
+        [0, 3, 6],
         [1, 4, 7],
+        [2, 4, 6],
         [2, 5, 8],
-        [3, 5, 7],
-        [3, 6, 9],
-        [4, 5, 6],
-        [7, 8, 9],
+        [3, 4, 5],
+        [6, 7, 8],
     ];
+
+    useEffect(() => {
+        console.log("usedX: ", usedX);
+    }, [usedX]);
 
     useEffect(() => {
         console.log("updated x: ", x);
@@ -58,29 +65,29 @@ function App() {
         }
     };
 
-    const Circle = (props) => {
-        const [isDropped, setIsDropped] = useState(false);
+    // const Circle = (props) => {
+    //     const [isDropped, setIsDropped] = useState(false);
 
-        if (isDropped) return;
+    //     if (isDropped) return;
 
-        return (
-            <DragDropContainer
-                targetKey="foo"
-                onDragStart={() => console.log("start")}
-                onDrop={() => setIsDropped(true)}
-                dragData={{ type: "o", size: props.size }}
-            >
-                <div
-                    key={"O" + props.size}
-                    style={{
-                        width: `${(props.size + 3) * 6}px`,
-                        height: `${(props.size + 3) * 6}px`,
-                    }}
-                    className="rounded-[50%] border-4 border-black mx-auto"
-                ></div>
-            </DragDropContainer>
-        );
-    };
+    //     return (
+    //         <DragDropContainer
+    //             targetKey="foo"
+    //             onDragStart={() => console.log("start")}
+    //             onDrop={() => setIsDropped(true)}
+    //             dragData={{ type: "o", size: props.size }}
+    //         >
+    //             <div
+    //                 key={"O" + props.size}
+    //                 style={{
+    //                     width: `${(props.size + 3) * 6}px`,
+    //                     height: `${(props.size + 3) * 6}px`,
+    //                 }}
+    //                 className="rounded-[50%] border-4 border-black mx-auto"
+    //             ></div>
+    //         </DragDropContainer>
+    //     );
+    // };
 
     return (
         <div className="w-screen h-screen bg-green-800 flex justify-center items-center">
@@ -94,7 +101,7 @@ function App() {
 
                         {[...Array(6).keys()].map((figure) => (
                             <div className="flex justify-center w-full h-[64px] items-center">
-                                <Cross size={figure} x={x} index={figure} />
+                                <Cross size={figure} x={x} index={figure} usedX={usedX} xMove={xMove} />
                             </div>
                         ))}
                     </div>
@@ -108,7 +115,19 @@ function App() {
                                 key={cell}
                                 // onClick={() => (winningLine ? null : handleCellClicked(cell + 1))}
                             >
-                                <DropZone index={cell} x={x} setX={setX} />
+                                <DropZone
+                                    index={cell}
+                                    x={x}
+                                    setX={setX}
+                                    o={o}
+                                    setO={setO}
+                                    usedX={usedX}
+                                    usedO={usedO}
+                                    setUsedX={setUsedX}
+                                    setUsedO={setUsedO}
+                                    xMove={xMove}
+                                    setXMove={setXMove}
+                                />
                             </div>
                         ))}
                     </div>
@@ -117,14 +136,16 @@ function App() {
                         <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${xMove ? "invisible" : ""}`} />
 
                         {[...Array(6).keys()].map((figure) => (
-                            <Circle size={figure} />
+                            <div className="flex justify-center w-full h-[64px] items-center">
+                                <Circle size={figure} o={o} index={figure} usedO={usedO} xMove={xMove} />
+                            </div>
                         ))}
                     </div>
                 </div>
 
                 {/* <p>{xMove ? "X move" : "O move"}</p> */}
             </div>
-            {winningLine ? <LineTo from={String(winningLine[0] - 1)} to={String(winningLine[2] - 1)} borderWidth={4} borderStyle="" delay={1000} /> : null}
+            {winningLine ? <LineTo from={String(winningLine[0])} to={String(winningLine[2])} borderWidth={4} borderStyle="" delay={1000} /> : null}
         </div>
     );
 }
