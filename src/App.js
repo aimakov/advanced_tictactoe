@@ -15,6 +15,41 @@ function App() {
     const [usedO, setUsedO] = useState([]);
     const [winningLine, setWinningLine] = useState();
 
+    const [available, setAvailable] = useState([]);
+    const [overridable, setOverridable] = useState([]);
+
+    const [gameCell, setGameCell] = useState({});
+
+    const showCellsOnDragStart = (type, size, index) => {
+        let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell)[0][1].type);
+        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell).filter((cell) => cell[1].type === "o"));
+
+        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell).filter((temp) => temp[1].type === "o" && temp[1].size < size));
+        // console.log(
+        //     Object.entries(gameCell)
+        //         .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
+        //         .reduce((array, element) => {
+        //             array.push(element[0]);
+        //             return array;
+        //         }, [])
+        // );
+        if (type === "x")
+            console.log(
+                initialCells.filter(
+                    (cell) =>
+                        !x.includes(cell) &&
+                        !Object.entries(gameCell)
+                            .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
+                            .reduce((array, element) => {
+                                array.push(Number(element[0]));
+                                return array;
+                            }, [])
+                            .includes(cell)
+                )
+            );
+    };
+
     const winningCombinations = [
         [0, 1, 2],
         [0, 4, 8],
@@ -27,16 +62,10 @@ function App() {
     ];
 
     useEffect(() => {
-        console.log("usedX: ", usedX);
-    }, [usedX]);
-
-    useEffect(() => {
-        console.log("updated x: ", x);
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => x.includes(v))) {
                 setWinningLine(winningCombination);
-                console.log("X won");
-                console.log(winningCombination);
+                window.alert("X won");
             }
         });
     }, [x]);
@@ -45,8 +74,7 @@ function App() {
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => o.includes(v))) {
                 setWinningLine(winningCombination);
-                console.log("O won");
-                console.log(winningCombination);
+                window.alert("O won");
             }
         });
     }, [o]);
@@ -65,30 +93,6 @@ function App() {
         }
     };
 
-    // const Circle = (props) => {
-    //     const [isDropped, setIsDropped] = useState(false);
-
-    //     if (isDropped) return;
-
-    //     return (
-    //         <DragDropContainer
-    //             targetKey="foo"
-    //             onDragStart={() => console.log("start")}
-    //             onDrop={() => setIsDropped(true)}
-    //             dragData={{ type: "o", size: props.size }}
-    //         >
-    //             <div
-    //                 key={"O" + props.size}
-    //                 style={{
-    //                     width: `${(props.size + 3) * 6}px`,
-    //                     height: `${(props.size + 3) * 6}px`,
-    //                 }}
-    //                 className="rounded-[50%] border-4 border-black mx-auto"
-    //             ></div>
-    //         </DragDropContainer>
-    //     );
-    // };
-
     return (
         <div className="w-screen h-screen bg-green-800 flex justify-center items-center">
             <h2 className=" absolute top-0 left-2/4 -translate-x-2/4 p-4 text-[1.5rem] text-neutral-300 font-medium font-mono">
@@ -101,7 +105,7 @@ function App() {
 
                         {[...Array(6).keys()].map((figure) => (
                             <div className="flex justify-center w-full h-[64px] items-center">
-                                <Cross size={figure} x={x} index={figure} usedX={usedX} xMove={xMove} />
+                                <Cross size={figure} x={x} index={figure} usedX={usedX} xMove={xMove} showCellsOnDragStart={showCellsOnDragStart} />
                             </div>
                         ))}
                     </div>
@@ -127,6 +131,8 @@ function App() {
                                     setUsedO={setUsedO}
                                     xMove={xMove}
                                     setXMove={setXMove}
+                                    gameCell={gameCell}
+                                    setGameCell={setGameCell}
                                 />
                             </div>
                         ))}

@@ -6,7 +6,7 @@ const Circle = (props) => {
 
     useEffect(() => {
         if (props.usedO.includes(props.index)) {
-            console.log("props.x includes");
+            // console.log("props.x includes");
             setIsDropped(true);
         }
     }, [props.usedO]);
@@ -16,7 +16,7 @@ const Circle = (props) => {
     return (
         <DragDropContainer
             targetKey="foo"
-            onDragStart={() => console.log("start")}
+            // onDragStart={() => console.log("start")}
             // onDrop={() => setIsDropped(true)}
             dragData={{ type: "o", size: props.size, index: props.index }}
             noDragging={props.xMove}

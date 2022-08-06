@@ -5,6 +5,7 @@ import { arrayRemove } from "./functions/arrayRemove";
 
 const DropZone = (props) => {
     const [item, setItem] = useState();
+    const [dragOver, setDragOver] = useState("");
 
     const handleDrop = (e) => {
         const data = {
@@ -19,16 +20,26 @@ const DropZone = (props) => {
                 props.setX(temp);
                 props.setUsedX([...props.usedX, e.dragData.index]);
                 props.setXMove(false);
+
+                let tempCell = props.gameCell;
+                temp = props.index;
+
+                tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                props.setGameCell(tempCell);
             } else if (e.dragData.type === "o") {
                 let temp = [...props.o, props.index];
                 props.setO(temp);
                 props.setUsedO([...props.usedO, e.dragData.index]);
                 props.setXMove(true);
+
+                let tempCell = props.gameCell;
+                temp = props.index;
+
+                tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                props.setGameCell(tempCell);
             }
             return;
         }
-
-        console.log("From Dropzone: ", item.size, e.dragData.size);
 
         if (item.size < e.dragData.size) {
             if (item.type !== e.dragData.type) {
@@ -53,8 +64,8 @@ const DropZone = (props) => {
     };
 
     return (
-        <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
-            <div className="w-[120px] h-[120px] flex justify-center items-center">
+        <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)} onDragEnter={() => setDragOver("bg-blue-300")} onDragLeave={() => setDragOver("")}>
+            <div className={`w-[120px] h-[120px] flex justify-center items-center ${dragOver}`}>
                 {item?.type === "x" && (
                     <div>
                         {

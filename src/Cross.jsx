@@ -7,7 +7,7 @@ const Cross = (props) => {
 
     useEffect(() => {
         if (props.usedX.includes(props.index)) {
-            console.log("props.x includes");
+            // console.log("props.x includes");
             setIsDropped(true);
         }
     }, [props.usedX]);
@@ -17,7 +17,8 @@ const Cross = (props) => {
     return (
         <DragDropContainer
             targetKey="foo"
-            onDragStart={() => console.log("start")}
+            onDragStart={() => props.showCellsOnDragStart("x", props.size, props.index)}
+            // onDragStart={() => console.log("starting")}
             noDragging={!props.xMove}
             dragData={{ type: "x", size: props.size, index: props.index }}
         >
