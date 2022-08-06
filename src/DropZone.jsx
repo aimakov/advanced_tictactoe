@@ -5,7 +5,6 @@ import { arrayRemove } from "./functions/arrayRemove";
 
 const DropZone = (props) => {
     const [item, setItem] = useState();
-    const [dragOver, setDragOver] = useState("");
 
     const handleDrop = (e) => {
         const data = {
@@ -64,8 +63,12 @@ const DropZone = (props) => {
     };
 
     return (
-        <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)} onDragEnter={() => setDragOver("bg-blue-300")} onDragLeave={() => setDragOver("")}>
-            <div className={`w-[120px] h-[120px] flex justify-center items-center ${dragOver}`}>
+        <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
+            <div
+                className={`w-[120px] h-[120px] flex justify-center items-center ${props.overridable.includes(props.index) ? "bg-yellow-500" : ""}  ${
+                    props.available.includes(props.index) ? "bg-green-500" : ""
+                } `}
+            >
                 {item?.type === "x" && (
                     <div>
                         {

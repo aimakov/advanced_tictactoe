@@ -22,33 +22,34 @@ function App() {
 
     const showCellsOnDragStart = (type, size, index) => {
         let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell)[0][1].type);
-        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell).filter((cell) => cell[1].type === "o"));
 
-        // if (Object.entries(gameCell).length > 0) console.log(Object.entries(gameCell).filter((temp) => temp[1].type === "o" && temp[1].size < size));
-        // console.log(
-        //     Object.entries(gameCell)
-        //         .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
-        //         .reduce((array, element) => {
-        //             array.push(element[0]);
-        //             return array;
-        //         }, [])
-        // );
-        if (type === "x")
-            console.log(
-                initialCells.filter(
-                    (cell) =>
-                        !x.includes(cell) &&
-                        !Object.entries(gameCell)
-                            .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
-                            .reduce((array, element) => {
-                                array.push(Number(element[0]));
-                                return array;
-                            }, [])
-                            .includes(cell)
+        if (type === "x") {
+            setOverridable(
+                initialCells.filter((cell) =>
+                    Object.entries(gameCell)
+                        .filter((temp) => temp[1].type === "o" && temp[1].size < size)
+                        .reduce((array, element) => {
+                            array.push(Number(element[0]));
+                            return array;
+                        }, [])
+                        .includes(cell)
                 )
             );
+            setAvailable(initialCells.filter((cell) => !x.includes(cell) && !o.includes(cell)));
+        }
     };
+
+    // initialCells.filter(
+    //     (cell) =>
+    //         !x.includes(cell) &&
+    //         !Object.entries(gameCell)
+    //             .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
+    //             .reduce((array, element) => {
+    //                 array.push(Number(element[0]));
+    //                 return array;
+    //             }, [])
+    //             .includes(cell)
+    // );
 
     const winningCombinations = [
         [0, 1, 2],
@@ -105,7 +106,16 @@ function App() {
 
                         {[...Array(6).keys()].map((figure) => (
                             <div className="flex justify-center w-full h-[64px] items-center">
-                                <Cross size={figure} x={x} index={figure} usedX={usedX} xMove={xMove} showCellsOnDragStart={showCellsOnDragStart} />
+                                <Cross
+                                    size={figure}
+                                    x={x}
+                                    index={figure}
+                                    usedX={usedX}
+                                    xMove={xMove}
+                                    showCellsOnDragStart={showCellsOnDragStart}
+                                    setAvailable={setAvailable}
+                                    setOverridable={setOverridable}
+                                />
                             </div>
                         ))}
                     </div>
@@ -133,6 +143,8 @@ function App() {
                                     setXMove={setXMove}
                                     gameCell={gameCell}
                                     setGameCell={setGameCell}
+                                    available={available}
+                                    overridable={overridable}
                                 />
                             </div>
                         ))}

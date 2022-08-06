@@ -14,10 +14,16 @@ const Cross = (props) => {
 
     if (isDropped) return;
 
+    const handleDragEnd = () => {
+        props.setAvailable([]);
+        props.setOverridable([]);
+    };
+
     return (
         <DragDropContainer
             targetKey="foo"
             onDragStart={() => props.showCellsOnDragStart("x", props.size, props.index)}
+            onDragEnd={handleDragEnd}
             // onDragStart={() => console.log("starting")}
             noDragging={!props.xMove}
             dragData={{ type: "x", size: props.size, index: props.index }}
