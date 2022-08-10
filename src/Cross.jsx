@@ -25,7 +25,7 @@ const Cross = (props) => {
             onDragStart={() => props.showCellsOnDragStart("x", props.size, props.index)}
             onDragEnd={handleDragEnd}
             // onDragStart={() => console.log("starting")}
-            noDragging={!props.xMove}
+            noDragging={!props.xMove || props.winningLine}
             dragData={{ type: "x", size: props.size, index: props.index }}
         >
             <FiX

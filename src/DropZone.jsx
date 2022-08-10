@@ -33,7 +33,6 @@ const DropZone = (props) => {
 
                 let tempCell = props.gameCell;
                 temp = props.index;
-
                 tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
                 props.setGameCell(tempCell);
             }
@@ -48,12 +47,22 @@ const DropZone = (props) => {
                     props.setUsedX([...props.usedX, e.dragData.index]);
                     props.setO(arrayRemove([...props.o], props.index));
                     props.setXMove(false);
+
+                    let tempCell = props.gameCell;
+                    temp = props.index;
+                    tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                    props.setGameCell(tempCell);
                 } else if (e.dragData.type === "o") {
                     let temp = [...props.o, props.index];
                     props.setO(temp);
                     props.setUsedO([...props.usedO, e.dragData.index]);
                     props.setX(arrayRemove([...props.x], props.index));
                     props.setXMove(true);
+
+                    let tempCell = props.gameCell;
+                    temp = props.index;
+                    tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                    props.setGameCell(tempCell);
                 }
             }
             setItem(data);
