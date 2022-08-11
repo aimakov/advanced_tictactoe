@@ -634,8 +634,16 @@ video {
   width: 120px;
 }
 
+.w-\[80\%\] {
+  width: 80%;
+}
+
 .max-w-md {
   max-width: 28rem;
+}
+
+.max-w-lg {
+  max-width: 32rem;
 }
 
 .-translate-x-2\/4 {
@@ -676,28 +684,24 @@ video {
   justify-items: center;
 }
 
-.gap-14 {
-  gap: 3.5rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-10 {
   gap: 2.5rem;
+}
+
+.gap-14 {
+  gap: 3.5rem;
 }
 
 .rounded-2xl {
   border-radius: 1rem;
 }
 
-.rounded-\[50\%\] {
-  border-radius: 50%;
-}
-
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-\[50\%\] {
+  border-radius: 50%;
 }
 
 .border-4 {
@@ -740,10 +744,6 @@ video {
 
 .p-10 {
   padding: 2.5rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
 }
 
 .py-2 {

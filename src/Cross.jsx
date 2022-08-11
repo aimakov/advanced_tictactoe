@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
 import { DragDropContainer } from "react-drag-drop-container";
+// import Thanos from "./assets/game_icon_pairs/Pair_5/2.png";
 
 const Cross = (props) => {
     const [isDropped, setIsDropped] = useState(false);
@@ -28,12 +29,13 @@ const Cross = (props) => {
             noDragging={!props.xMove || props.winningLine}
             dragData={{ type: "x", size: props.size, index: props.index }}
         >
-            <FiX
+            {/* <FiX
                 key={"X" + props.size}
                 //   className={`text-[${(figure + 1) * 10}px]`}
                 style={{ fontSize: `${(props.size + 3) * 8}px` }}
                 //   className="mx-auto"
-            />
+            /> */}
+            <img src={props.pair.first_png} style={{ width: `${(props.size + 3) * 13}px` }} />
         </DragDropContainer>
     );
 };

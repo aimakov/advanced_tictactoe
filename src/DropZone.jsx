@@ -20,10 +20,8 @@ const DropZone = (props) => {
                 props.setUsedX([...props.usedX, e.dragData.index]);
                 props.setXMove(false);
 
-                let tempCell = props.gameCell;
-                temp = props.index;
-
-                tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                let tempCell = JSON.parse(JSON.stringify(props.gameCell));
+                tempCell[props.index] = { type: e.dragData.type, size: e.dragData.size };
                 props.setGameCell(tempCell);
             } else if (e.dragData.type === "o") {
                 let temp = [...props.o, props.index];
@@ -31,9 +29,9 @@ const DropZone = (props) => {
                 props.setUsedO([...props.usedO, e.dragData.index]);
                 props.setXMove(true);
 
-                let tempCell = props.gameCell;
-                temp = props.index;
-                tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                // let tempCell = props.gameCell;
+                let tempCell = JSON.parse(JSON.stringify(props.gameCell));
+                tempCell[props.index] = { type: e.dragData.type, size: e.dragData.size };
                 props.setGameCell(tempCell);
             }
             return;
@@ -48,9 +46,8 @@ const DropZone = (props) => {
                     props.setO(arrayRemove([...props.o], props.index));
                     props.setXMove(false);
 
-                    let tempCell = props.gameCell;
-                    temp = props.index;
-                    tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                    let tempCell = JSON.parse(JSON.stringify(props.gameCell));
+                    tempCell[props.index] = { type: e.dragData.type, size: e.dragData.size };
                     props.setGameCell(tempCell);
                 } else if (e.dragData.type === "o") {
                     let temp = [...props.o, props.index];
@@ -59,9 +56,8 @@ const DropZone = (props) => {
                     props.setX(arrayRemove([...props.x], props.index));
                     props.setXMove(true);
 
-                    let tempCell = props.gameCell;
-                    temp = props.index;
-                    tempCell[temp] = { type: e.dragData.type, size: e.dragData.size };
+                    let tempCell = JSON.parse(JSON.stringify(props.gameCell));
+                    tempCell[props.index] = { type: e.dragData.type, size: e.dragData.size };
                     props.setGameCell(tempCell);
                 }
             }

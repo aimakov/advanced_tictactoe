@@ -7,6 +7,8 @@ import DropZone from "./DropZone";
 import Cross from "./Cross";
 import Circle from "./Circle";
 
+import { FightPairs } from "./assets/Pairs";
+
 function App() {
     const [xMove, setXMove] = useState(true);
     const [x, setX] = useState([]);
@@ -19,6 +21,8 @@ function App() {
     const [overridable, setOverridable] = useState([]);
 
     const [gameCell, setGameCell] = useState({});
+
+    const [pair, setPair] = useState(2);
 
     const showCellsOnDragStart = (type, size, index) => {
         let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -54,18 +58,6 @@ function App() {
         }
     };
 
-    // initialCells.filter(
-    //     (cell) =>
-    //         !x.includes(cell) &&
-    //         !Object.entries(gameCell)
-    //             .filter((temp) => temp[1].type === "o" && temp[1].size >= size)
-    //             .reduce((array, element) => {
-    //                 array.push(Number(element[0]));
-    //                 return array;
-    //             }, [])
-    //             .includes(cell)
-    // );
-
     const winningCombinations = [
         [0, 1, 2],
         [0, 4, 8],
@@ -87,6 +79,11 @@ function App() {
     }, [x]);
 
     useEffect(() => {
+        console.log(Object.entries(gameCell).length);
+        if (Object.entries(gameCell).length > 8 && !winningLine) window.alert("It's a tie.");
+    }, [gameCell]);
+
+    useEffect(() => {
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => o.includes(v))) {
                 setWinningLine(winningCombination);
@@ -106,8 +103,8 @@ function App() {
                     Welcome to the Next Level TicTacToe
                 </h2>
 
-                <div className=" w-[60%] p-10 bg-white rounded-2xl relative flex flex-col justify-center gap-14 items-center ">
-                    <div className="w-full max-w-md h-full flex flex-col justify-center gap-14 items-center ">
+                <div className=" w-[80%] p-10 bg-white rounded-2xl relative flex flex-col justify-center gap-14 items-center ">
+                    <div className="w-full h-full flex flex-col justify-center gap-14 items-center ">
                         <div className="grid grid-cols-7 justify-center items-center w-full text-center mr-14">
                             <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold ${xMove ? "" : "invisible"}`} />
 
@@ -123,6 +120,7 @@ function App() {
                                         setAvailable={setAvailable}
                                         setOverridable={setOverridable}
                                         winningLine={winningLine}
+                                        pair={FightPairs[pair]}
                                     />
                                 </div>
                             ))}
@@ -171,6 +169,7 @@ function App() {
                                         setAvailable={setAvailable}
                                         setOverridable={setOverridable}
                                         winningLine={winningLine}
+                                        pair={FightPairs[pair]}
                                     />
                                 </div>
                             ))}
