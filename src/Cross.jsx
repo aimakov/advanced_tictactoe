@@ -23,7 +23,7 @@ const Cross = (props) => {
     return (
         <DragDropContainer
             targetKey="foo"
-            onDragStart={() => props.showCellsOnDragStart("x", props.size, props.index)}
+            onDrag={() => props.showCellsOnDragStart("x", props.size, props.index)}
             onDragEnd={handleDragEnd}
             // onDragStart={() => console.log("starting")}
             noDragging={!props.xMove || props.winningLine}

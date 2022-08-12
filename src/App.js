@@ -19,10 +19,11 @@ function App() {
 
     const [available, setAvailable] = useState([]);
     const [overridable, setOverridable] = useState([]);
+    const [notAvailable, setNotAvailable] = useState([]);
 
     const [gameCell, setGameCell] = useState({});
 
-    const [pair, setPair] = useState(2);
+    const [pair, setPair] = useState(10);
 
     const showCellsOnDragStart = (type, size, index) => {
         let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -68,6 +69,12 @@ function App() {
         [3, 4, 5],
         [6, 7, 8],
     ];
+
+    useEffect(() => {
+        let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        if (available.length === 0 && overridable.length === 0) setNotAvailable([]);
+        else setNotAvailable(initialCells.filter((cell) => !available.includes(cell) && !overridable.includes(cell)));
+    }, [available, overridable]);
 
     useEffect(() => {
         winningCombinations.forEach((winningCombination) => {
@@ -149,6 +156,8 @@ function App() {
                                         setGameCell={setGameCell}
                                         available={available}
                                         overridable={overridable}
+                                        pair={FightPairs[pair]}
+                                        notAvailable={notAvailable}
                                     />
                                 </div>
                             ))}

@@ -26,7 +26,7 @@ const Circle = (props) => {
             // onDrop={() => setIsDropped(true)}
             dragData={{ type: "o", size: props.size, index: props.index }}
             noDragging={props.xMove || props.winningLine}
-            onDragStart={() => props.showCellsOnDragStart("o", props.size, props.index)}
+            onDrag={() => props.showCellsOnDragStart("o", props.size, props.index)}
             onDragEnd={handleDragEnd}
         >
             {/* <div
