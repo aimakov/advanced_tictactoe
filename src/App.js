@@ -107,7 +107,7 @@ function App() {
     if (!pair)
         return (
             <div className="w-screen h-screen bg-green-800 flex flex-col justify-center items-center">
-                <div className=" h-3/4 p-6 bg-white rounded-2xl relative flex flex-col justify-center gap-14 items-center ">
+                <div className=" h-3/4 p-6 w-4/5 bg-white rounded-2xl relative flex flex-col justify-center items-center ">
                     <PickPairs pairs={FightPairs} setPair={setPair} />
                 </div>
             </div>
@@ -122,7 +122,7 @@ function App() {
 
                 <div className=" w-[85%] p-6 bg-white rounded-2xl relative flex flex-col justify-center items-center ">
                     <div className="w-full h-full flex flex-col justify-center gap-6 items-center ">
-                        <div className="grid grid-cols-7 justify-center items-center w-full text-center mr-14 h-[90px]">
+                        <div className="grid grid-cols-7 max-w-xl justify-center items-center w-full text-center mr-14 h-[90px]">
                             <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold ${xMove ? "" : "invisible"}`} />
 
                             {[...Array(6).keys()].map((figure) => (
@@ -146,7 +146,7 @@ function App() {
                         <div className="  gap-2 grid grid-cols-3 grid-rows-3 justify-items-center items-center">
                             {[...Array(9).keys()].map((cell) => (
                                 <div
-                                    className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] bg-blue-500 flex justify-center items-center ${cell}`}
+                                    className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] bg-blue-500 rounded-lg flex justify-center items-center ${cell}`}
                                     key={cell}
                                     // onClick={() => (winningLine ? null : handleCellClicked(cell + 1))}
                                 >
@@ -173,7 +173,7 @@ function App() {
                             ))}
                         </div>
 
-                        <div className="grid grid-cols-7 justify-around items-center w-full mr-14 h-[90px]">
+                        <div className="grid grid-cols-7 max-w-xl justify-around items-center w-full mr-14 h-[90px]">
                             <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${xMove ? "invisible" : ""}`} />
 
                             {[...Array(6).keys()].map((figure) => (

@@ -39,7 +39,7 @@ const Circle = (props) => {
                 className="rounded-[50%] border-4 border-black mx-auto"
             ></div> */}
             {/* <img src={props.pair.second_png} style={{ width: `${(props.size + 3) * 13}px` }} /> */}
-            <img src={props.pair.second_png} style={{ width: `${(props.size + 1.5) * 2}vw`, maxWidth: `${(props.size + 1) * 20}px`, margin: "0 auto" }} />
+            <img src={props.pair.second_png} style={{ width: `${(props.size + 1.5) * 2}vw`, maxWidth: `${(props.size + 1) * 15}px`, margin: "0 auto" }} />
         </DragDropContainer>
     );
 };
