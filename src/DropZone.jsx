@@ -70,22 +70,20 @@ const DropZone = (props) => {
     return (
         <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
             <div
-                className={`w-[120px] h-[120px] flex justify-center items-center ${props.overridable.includes(props.index) ? "bg-yellow-500" : ""}  ${
-                    props.available.includes(props.index) ? "bg-green-500" : ""
-                } ${props.notAvailable.includes(props.index) ? "bg-red-300" : ""} `}
+                className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] flex justify-center items-center ${
+                    props.overridable.includes(props.index) ? "bg-yellow-500" : ""
+                }  ${props.available.includes(props.index) ? "bg-green-500" : ""} ${props.notAvailable.includes(props.index) ? "bg-red-300" : ""} `}
             >
                 {item?.type === "x" && (
-                    <div>
-                        {
-                            // <FiX
-                            //     key={"X" + item.size}
-                            //     //   className={`text-[${(figure + 1) * 10}px]`}
-                            //     style={{ fontSize: `${(item.size + 3) * 8}px` }}
-                            //     //   className="mx-auto"
-                            // />
-                            <img src={props.pair.first_png} style={{ width: `${(item.size + 3) * 13}px` }} />
-                        }
-                    </div>
+                    // <div>
+
+                    // <FiX
+                    //     key={"X" + item.size}
+                    //     //   className={`text-[${(figure + 1) * 10}px]`}
+                    //     style={{ fontSize: `${(item.size + 3) * 8}px` }}
+                    //     //   className="mx-auto"
+                    // />
+                    <img src={props.pair.first_png} style={{ width: `${(item.size + 1.5) * 2}vw`, maxWidth: `${(item.size + 1) * 20}px` }} />
                 )}
                 {item?.type === "o" && (
                     // <div
@@ -96,7 +94,7 @@ const DropZone = (props) => {
                     //     }}
                     //     className="rounded-[50%] border-4 border-black mx-auto"
                     // ></div>
-                    <img src={props.pair.second_png} style={{ width: `${(item.size + 3) * 13}px` }} />
+                    <img src={props.pair.second_png} style={{ width: `${(item.size + 1.5) * 2}vw`, maxWidth: `${(item.size + 1) * 20}px` }} />
                 )}
             </div>
         </DropTarget>

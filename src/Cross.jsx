@@ -30,12 +30,12 @@ const Cross = (props) => {
             dragData={{ type: "x", size: props.size, index: props.index }}
         >
             {/* <FiX
-                key={"X" + props.size}
-                //   className={`text-[${(figure + 1) * 10}px]`}
-                style={{ fontSize: `${(props.size + 3) * 8}px` }}
-                //   className="mx-auto"
-            /> */}
-            <img src={props.pair.first_png} style={{ width: `${(props.size + 3) * 13}px` }} />
+            key={"X" + props.size}
+            //   className={`text-[${(figure + 1) * 10}px]`}
+            style={{ fontSize: `${(props.size + 3) * 8}px` }}
+            //   className="mx-auto"
+        /> */}
+            <img src={props.pair.first_png} style={{ width: `${(props.size + 1.5) * 2}vw`, maxWidth: `${(props.size + 1) * 15}px`, margin: "0 auto" }} />
         </DragDropContainer>
     );
 };
