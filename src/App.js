@@ -44,22 +44,13 @@ function App() {
                     .includes(cell)
             );
             setOverridable(tempOver);
-            // setOverridable(
-            //     initialCells.filter((cell) =>
-            //         Object.entries(gameCell)
-            //             .filter((temp) => temp[1].type === "o" && temp[1].size < size)
-            //             .reduce((array, element) => {
-            //                 array.push(Number(element[0]));
-            //                 return array;
-            //             }, [])
-            //             .includes(cell)
-            //     )
-            // );
             tempAvail = initialCells.filter((cell) => !x.includes(cell) && !o.includes(cell));
             setAvailable(tempAvail);
 
-            // setAvailable(initialCells.filter((cell) => !x.includes(cell) && !o.includes(cell)));
-            setNotAvailable(initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell)));
+            let tempNot = initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell));
+
+            if (tempNot.length === 9) setPopUpText("Tie - the board is full.");
+            else setNotAvailable(tempNot);
         }
 
         if (type === "o") {
@@ -75,22 +66,12 @@ function App() {
             );
             setOverridable(tempOver);
 
-            // setOverridable(
-            //     initialCells.filter((cell) =>
-            //         Object.entries(gameCell)
-            //             .filter((temp) => temp[1].type === "x" && temp[1].size < size)
-            //             .reduce((array, element) => {
-            //                 array.push(Number(element[0]));
-            //                 return array;
-            //             }, [])
-            //             .includes(cell)
-            //     )
-            // );
             tempAvail = initialCells.filter((cell) => !x.includes(cell) && !o.includes(cell));
             setAvailable(tempAvail);
-            setNotAvailable(initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell)));
 
-            // setAvailable(initialCells.filter((cell) => !x.includes(cell) && !o.includes(cell)));
+            let tempNot = initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell));
+            if (tempNot.length === 9) setPopUpText("Tie - the board is full.");
+            else setNotAvailable(tempNot);
         }
     };
 
@@ -109,19 +90,6 @@ function App() {
         if (winningLine) return true;
         return false;
     };
-
-    // useEffect(() => {
-    //     let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    //     if (available.length === 0 && overridable.length === 0) setNotAvailable([]);
-    //     else setNotAvailable(initialCells.filter((cell) => !available.includes(cell) && !overridable.includes(cell)));
-    // }, [available, overridable]);
-
-    useEffect(() => {
-        if (notAvailable.length === 9) {
-            setPopUpText("Tie - the board is full.");
-        }
-        // console.log(notAvailable.length);
-    }, [notAvailable]);
 
     useEffect(() => {
         let tempX, tempO;
@@ -142,7 +110,6 @@ function App() {
             setWinningLine(tempO);
             setPopUpText("Bottom player won!");
         }
-        // } else if (Object.entries(gameCell).length > 8) setPopUpText("Tie - the board is full.");
     }, [gameCell]);
 
     useEffect(() => {
