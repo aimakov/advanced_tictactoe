@@ -7,6 +7,7 @@ import DropZone from "./DropZone";
 import Cross from "./Cross";
 import Circle from "./Circle";
 import PickPairs from "./PickPairs";
+import Popup from "./Popup";
 
 import { FightPairs } from "./assets/Pairs";
 
@@ -21,6 +22,8 @@ function App() {
     const [available, setAvailable] = useState([]);
     const [overridable, setOverridable] = useState([]);
     const [notAvailable, setNotAvailable] = useState([]);
+
+    const [popUpText, setPopUpText] = useState("");
 
     const [gameCell, setGameCell] = useState({});
 
@@ -81,21 +84,22 @@ function App() {
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => x.includes(v))) {
                 setWinningLine(winningCombination);
-                window.alert("X won");
+                setPopUpText("Top player won!");
             }
         });
     }, [x]);
 
     useEffect(() => {
         console.log(Object.entries(gameCell).length);
-        if (Object.entries(gameCell).length > 8 && !winningLine) window.alert("It's a tie.");
+        if (usedO.length === 6 && usedX.length === 6) setPopUpText("Tie - no elemets left.");
+        if (Object.entries(gameCell).length > 8 && !winningLine) setPopUpText("Tie - the board is full.");
     }, [gameCell]);
 
     useEffect(() => {
         winningCombinations.forEach((winningCombination) => {
             if (winningCombination.every((v) => o.includes(v))) {
                 setWinningLine(winningCombination);
-                window.alert("O won");
+                setPopUpText("Bottom player won!");
             }
         });
     }, [o]);
@@ -106,8 +110,8 @@ function App() {
 
     if (!pair)
         return (
-            <div className="w-screen h-screen bg-green-800 flex flex-col justify-center items-center">
-                <div className=" h-3/4 p-6 w-4/5 bg-white rounded-2xl relative flex flex-col justify-center items-center ">
+            <div className="w-screen h-screen bg-[#e0e0e0] flex flex-col justify-center items-center">
+                <div className=" h-3/4 p-6 w-4/5 max-w-xl bg-[#e0e0e0] shadow-[20px_20px_60px_#bebebe,_-20px_-20px_60px_#ffffff] rounded-[50px] relative flex flex-col justify-center items-center ">
                     <PickPairs pairs={FightPairs} setPair={setPair} />
                 </div>
             </div>
@@ -115,14 +119,15 @@ function App() {
 
     return (
         <>
-            <div className="w-screen h-screen bg-green-800 flex flex-col justify-center items-center gap-4">
+            <div className="w-screen h-screen bg-[#e0e0e0] flex flex-col justify-center items-center gap-4">
                 {/* <h2 className=" absolute top-0 left-2/4 -translate-x-2/4 p-4 text-[1.5rem] text-neutral-300 font-medium font-mono">
                     Welcome to the Next Level TicTacToe
                 </h2> */}
+                {popUpText ? <Popup popUpText={popUpText} setPopUpText={setPopUpText} /> : null}
 
-                <div className=" w-[85%] p-6 bg-white rounded-2xl relative flex flex-col justify-center items-center ">
+                <div className=" w-[85%] max-w-2xl p-6 bg-[#e0e0e0] shadow-[20px_20px_60px_#bebebe,_-20px_-20px_60px_#ffffff] rounded-[50px] relative flex flex-col justify-center items-center ">
                     <div className="w-full h-full flex flex-col justify-center gap-6 items-center ">
-                        <div className="grid grid-cols-7 max-w-xl justify-center items-center w-full text-center mr-14 h-[90px]">
+                        <div className="grid grid-cols-7 max-w-xl justify-center items-center w-full text-center mr-10 h-[90px]">
                             <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold ${xMove ? "" : "invisible"}`} />
 
                             {[...Array(6).keys()].map((figure) => (
@@ -146,7 +151,7 @@ function App() {
                         <div className="  gap-2 grid grid-cols-3 grid-rows-3 justify-items-center items-center">
                             {[...Array(9).keys()].map((cell) => (
                                 <div
-                                    className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] bg-blue-500 rounded-lg flex justify-center items-center ${cell}`}
+                                    className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] bg-blue-300 rounded-lg flex justify-center items-center ${cell}`}
                                     key={cell}
                                     // onClick={() => (winningLine ? null : handleCellClicked(cell + 1))}
                                 >
@@ -173,7 +178,7 @@ function App() {
                             ))}
                         </div>
 
-                        <div className="grid grid-cols-7 max-w-xl justify-around items-center w-full mr-14 h-[90px]">
+                        <div className="grid grid-cols-7 max-w-xl justify-around items-center w-full mr-10 h-[90px]">
                             <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${xMove ? "invisible" : ""}`} />
 
                             {[...Array(6).keys()].map((figure) => (
@@ -195,11 +200,14 @@ function App() {
                         </div>
                     </div>
                 </div>
-                <button onClick={handleReset} className="py-2 px-4 bg-white rounded-xl">
+                <button
+                    onClick={handleReset}
+                    className="py-2 px-4 bg-[#e0e0e0] hover:bg-[#bfbfbf] transition-all duration-300 shadow-[7px_7px_13px_#bebebe,_-7px_-7px_13px_#ffffff] rounded-[10px]"
+                >
                     Reset
                 </button>
             </div>
-            {winningLine ? <LineTo from={String(winningLine[0])} to={String(winningLine[2])} borderWidth={4} borderStyle="" delay={1000} /> : null}
+            {winningLine ? <LineTo from={String(winningLine[0])} to={String(winningLine[2])} borderWidth={2} borderStyle="" delay={1000} /> : null}
         </>
     );
 }

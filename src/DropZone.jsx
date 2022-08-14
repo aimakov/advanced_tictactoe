@@ -71,8 +71,8 @@ const DropZone = (props) => {
         <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
             <div
                 className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] flex justify-center items-center rounded-lg ${
-                    props.overridable.includes(props.index) ? "bg-yellow-500" : ""
-                }  ${props.available.includes(props.index) ? "bg-green-500" : ""} ${props.notAvailable.includes(props.index) ? "bg-red-300" : ""} `}
+                    props.overridable.includes(props.index) ? "bg-yellow-400/80" : ""
+                }  ${props.available.includes(props.index) ? "bg-lime-500/80" : ""} ${props.notAvailable.includes(props.index) ? "bg-red-300" : ""} `}
             >
                 {item?.type === "x" && (
                     // <div>
