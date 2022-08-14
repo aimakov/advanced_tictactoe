@@ -29,6 +29,8 @@ function App() {
 
     const [pair, setPair] = useState();
 
+    const [showArrow, setShowArrow] = useState(true);
+
     const showCellsOnDragStart = (type, size, index) => {
         let initialCells = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -49,8 +51,10 @@ function App() {
 
             let tempNot = initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell));
 
-            if (tempNot.length === 9) setPopUpText("Tie - the board is full.");
-            else setNotAvailable(tempNot);
+            if (tempNot.length === 9) {
+                setPopUpText("Tie - the board is full.");
+                setShowArrow(false);
+            } else setNotAvailable(tempNot);
         }
 
         if (type === "o") {
@@ -70,8 +74,10 @@ function App() {
             setAvailable(tempAvail);
 
             let tempNot = initialCells.filter((cell) => !tempAvail.includes(cell) && !tempOver.includes(cell));
-            if (tempNot.length === 9) setPopUpText("Tie - the board is full.");
-            else setNotAvailable(tempNot);
+            if (tempNot.length === 9) {
+                setPopUpText("Tie - the board is full.");
+                setShowArrow(false);
+            } else setNotAvailable(tempNot);
         }
     };
 
@@ -85,11 +91,6 @@ function App() {
         [3, 4, 5],
         [6, 7, 8],
     ];
-
-    const checkWinStatus = () => {
-        if (winningLine) return true;
-        return false;
-    };
 
     useEffect(() => {
         let tempX, tempO;
@@ -106,15 +107,20 @@ function App() {
         if (tempX) {
             setWinningLine(tempX);
             setPopUpText("Top player won!");
+            setShowArrow(false);
         } else if (tempO) {
             setWinningLine(tempO);
             setPopUpText("Bottom player won!");
+            setShowArrow(false);
         }
     }, [gameCell]);
 
     useEffect(() => {
         console.log(Object.entries(gameCell).length);
-        if (usedO.length === 6 && usedX.length === 6) setPopUpText("Tie - no elements left.");
+        if (usedO.length === 6 && usedX.length === 6) {
+            setPopUpText("Tie - no elements left.");
+            setShowArrow(false);
+        }
     }, [gameCell]);
 
     const handleReset = () => {
@@ -128,6 +134,7 @@ function App() {
         setWinningLine();
         setPopUpText("");
         setGameCell({});
+        setShowArrow(true);
     };
 
     if (!pair)
@@ -150,7 +157,7 @@ function App() {
                 <div className=" w-[90%] max-w-2xl p-6 bg-[#e0e0e0] shadow-[20px_20px_60px_#bebebe,_-20px_-20px_60px_#ffffff] rounded-[50px] relative flex flex-col justify-center items-center ">
                     <div className="w-full h-full flex flex-col justify-center gap-6 items-center ">
                         <div className="grid grid-cols-7 max-w-xl justify-center items-center w-full text-center mr-10 h-[90px]">
-                            <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold ${xMove ? "" : "invisible"}`} />
+                            <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold ${xMove && showArrow ? "" : "invisible"}`} />
 
                             {[...Array(6).keys()].map((figure) => (
                                 <div className="flex justify-center w-full h-fit items-center">
@@ -202,7 +209,7 @@ function App() {
                         </div>
 
                         <div className="grid grid-cols-7 max-w-xl justify-around items-center w-full mr-10 h-[90px]">
-                            <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${xMove ? "invisible" : ""}`} />
+                            <FaLongArrowAltRight className={`mx-auto text-red-600 text-[2rem] font-bold  ${!xMove && showArrow ? "" : "invisible"}`} />
 
                             {[...Array(6).keys()].map((figure) => (
                                 <div className="flex justify-center w-full h-fit  items-center">
