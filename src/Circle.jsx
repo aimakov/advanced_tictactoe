@@ -18,6 +18,7 @@ const Circle = (props) => {
     const handleDragEnd = () => {
         props.setAvailable([]);
         props.setOverridable([]);
+        props.setNotAvailable([]);
     };
 
     return (

@@ -3,10 +3,10 @@ import { FightPairs } from "./assets/Pairs";
 
 const PickPairs = (props) => {
     return (
-        <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="w-full h-full flex flex-col overscroll-contain touch-none justify-center items-center">
             <h2 className="text-[1.5rem] mb-4">Pick your characters:</h2>
 
-            <ul className=" max-h-[90%] w-full overflow-y-auto lg:flex lg:flex-col">
+            <ul className=" max-h-[90%] w-full overscroll-contain overflow-y-auto lg:flex lg:flex-col">
                 {props.pairs.map((pair) => (
                     <li
                         className="grid grid-rows-[auto_1fr] grid-cols-[1fr_auto_1fr] my-2 hover:bg-gray-200 p-2 rounded-xl hover:cursor-pointer"

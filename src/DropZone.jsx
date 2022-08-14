@@ -70,7 +70,7 @@ const DropZone = (props) => {
     return (
         <DropTarget targetKey="foo" onHit={(e) => handleDrop(e)}>
             <div
-                className={`w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] flex justify-center items-center rounded-lg ${
+                className={`w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] flex justify-center items-center rounded-lg ${
                     props.overridable.includes(props.index) ? "bg-yellow-400/80" : ""
                 }  ${props.available.includes(props.index) ? "bg-lime-500/80" : ""} ${props.notAvailable.includes(props.index) ? "bg-red-300" : ""} `}
             >
